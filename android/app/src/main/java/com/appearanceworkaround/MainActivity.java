@@ -1,7 +1,8 @@
 package com.appearanceworkaround;
 
 import com.facebook.react.ReactActivity;
-import android.content.res.Configuration; // <-- Add this import
+import android.content.Intent; // <--- import
+import android.content.res.Configuration; // <--- import
 
 public class MainActivity extends ReactActivity {
 
@@ -19,6 +20,8 @@ public class MainActivity extends ReactActivity {
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
-    getReactInstanceManager().onConfigurationChanged(this, newConfig);
+    Intent intent = new Intent("onConfigurationChanged");
+    intent.putExtra("newConfig", newConfig);
+    sendBroadcast(intent);
   }
 }

@@ -10,22 +10,43 @@
  */
 
 import React from 'react';
-import {SafeAreaView, Text, StatusBar, useColorScheme} from 'react-native';
+import {SafeAreaView, Text, StatusBar, Button} from 'react-native';
+import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
+import NightModeModule from './NightModeModule';
 
-export default function App(): React.ReactElement {
+function MyComponent(): React.ReactElement {
   const colorScheme = useColorScheme();
   const bgColor = colorScheme === 'dark' ? 'black' : 'white';
   const textColor = colorScheme === 'dark' ? 'white' : 'black';
 
   return (
-    <>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: bgColor,
+        justifyContent: 'space-evenly',
+        padding: 20,
+      }}>
+      <Text style={{color: textColor, fontSize: 20, alignSelf: 'center'}}>
+        {colorScheme}
+      </Text>
+      <Button
+        title="Set night mode yes"
+        onPress={NightModeModule.setNightModeYes}
+      />
+      <Button
+        title="Set night mode no"
+        onPress={NightModeModule.setNightModeNo}
+      />
+    </SafeAreaView>
+  );
+}
+
+export default function App(): React.ReactElement {
+  return (
+    <AppearanceProvider>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView
-        style={{flex: 1, backgroundColor: bgColor, justifyContent: 'center'}}>
-        <Text style={{color: textColor, fontSize: 20, alignSelf: 'center'}}>
-          {colorScheme}
-        </Text>
-      </SafeAreaView>
-    </>
+      <MyComponent />
+    </AppearanceProvider>
   );
 }
